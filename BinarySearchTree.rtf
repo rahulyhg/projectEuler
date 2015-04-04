@@ -1,0 +1,239 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fnil\fcharset0 Consolas;}
+{\colortbl;\red255\green255\blue255;\red132\green134\blue132;\red38\green38\blue38;\red148\green6\blue75;
+\red213\green58\blue6;\red101\green71\blue146;\red14\green114\blue164;\red148\green6\blue75;\red255\green255\blue255;
+\red38\green38\blue38;\red101\green71\blue146;\red14\green114\blue164;\red132\green134\blue132;\red213\green58\blue6;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16460\viewh9420\viewkind0
+\deftab720
+\pard\pardeftab720\sl320
+
+\f0\fs24 \cf2 // Binary Search Tree - Implemenation in C++\cf3 \
+\cf2 // Simple program to create a BST of integers and search an element in it \cf3 \
+#\cf4 include\cf5 <iostream>\cf3 \
+\cf4 using\cf3  \cf4 namespace\cf3  \cf6 std\cf4 ;\cf3 \
+\cf2 //Definition of Node for Binary search tree\cf3 \
+\cf4 struct\cf3  \cf6 BstNode\cf3  \{\
+	\cf4 int\cf3  data; \
+	BstNode* left;\
+	BstNode* right;\
+\};\
+\'a0\
+\cf2 // Function to create a new Node in heap\cf3 \
+BstNode* \cf6 GetNewNode\cf3 (\cf4 int\cf3  data) \{\
+	BstNode* newNode = \cf4 new\cf3  \cf7 BstNode\cf3 ();\
+	newNode->data = data;\
+	newNode->left = newNode->right = \cf7 NULL\cf3 ;\
+	\cf4 return\cf3  newNode;\
+\}\
+\'a0\
+\cf2 // To insert data in BST, returns address of root node \cf3 \
+BstNode* \cf6 Insert\cf3 (BstNode* root,\cf4 int\cf3  data) \{\
+	\cf4 if\cf3 (root == \cf7 NULL\cf3 ) \{ \cf2 // empty tree\cf3 \
+		root = \cf7 GetNewNode\cf3 (data);\
+	\}\
+	\cf2 // if data to be inserted is lesser, insert in left subtree. \cf3 \
+	\cf4 else\cf3  \cf4 if\cf3 (data <= root->data) \{\
+		root->left = \cf7 Insert\cf3 (root->left,data);\
+	\}\
+	\cf2 // else, insert in right subtree. \cf3 \
+	\cf4 else\cf3  \{\
+		root->right = \cf7 Insert\cf3 (root->right,data);\
+	\}\
+	\cf4 return\cf3  root;\
+\}\
+\cf2 //To search an element in BST, returns true if element is found\cf3 \
+\cf4 bool\cf3  \cf6 Search\cf3 (BstNode* root,\cf4 int\cf3  data) \{\
+	\cf4 if\cf3 (root == \cf7 NULL\cf3 ) \{\
+		\cf4 return\cf3  \cf7 false\cf3 ;\
+	\}\
+	\cf4 else\cf3  \cf4 if\cf3 (root->data == data) \{\
+		\cf4 return\cf3  \cf7 true\cf3 ;\
+	\}\
+	\cf4 else\cf3  \cf4 if\cf3 (data <= root->data) \{\
+		\cf4 return\cf3  \cf7 Search\cf3 (root->left,data);\
+	\}\
+	\cf4 else\cf3  \{\
+		\cf4 return\cf3  \cf7 Search\cf3 (root->right,data);\
+	\}\
+\}\
+\
+int FindMin(BstNode* root)\{ //Similar for FindMax\
+	if(root == NULL)\{\
+		cout<<\'93Error: Tree is empty\'94;\
+		return -1;\
+	\}\
+	else if(root->left == NULL)\{\
+		return root->data;\
+	\}\
+	return FindMin(root->left);\
+\}\
+\
+int FindHeight(struct BstNode* root)\{\
+	if(root == NULL)\{\
+		return -1;\
+	\}\
+	return max(FindHeight(root->left),FindHeight(root->right)) +1;\
+\}\
+\cf4 int\cf3  \cf6 main\cf3 () \{\
+	BstNode* root = \cf7 NULL\cf3 ;  \cf2 // Creating an empty tree\cf3 \
+	\cf2 /*Code to test the logic*/\cf3 \
+	root = \cf7 Insert\cf3 (root,\cf7 15\cf3 );	\
+	root = \cf7 Insert\cf3 (root,\cf7 10\cf3 );	\
+	root = \cf7 Insert\cf3 (root,\cf7 20\cf3 );\
+	root = \cf7 Insert\cf3 (root,\cf7 25\cf3 );\
+	root = \cf7 Insert\cf3 (root,\cf7 8\cf3 );\
+	root = \cf7 Insert\cf3 (root,\cf7 12\cf3 );\
+	\cf2 // Ask user to enter a number.  \cf3 \
+	\cf4 int\cf3  number;\
+	cout<<\cf5 "Enter number be searched\\n"\cf3 ;\
+	cin>>number;\
+	\cf2 //If number is found, print "FOUND"\cf3 \
+	\cf4 if\cf3 (\cf7 Search\cf3 (root,number) == \cf7 true\cf3 ) cout<<\cf5 "Found\\n"\cf3 ;\
+	\cf4 else\cf3  cout<<\cf5 "Not Found\\n"\cf3 ;\
+\}\
+\
+Breadth-First Search : LevelOrderTraversal: L0, L1, L2\'85\
+//use #include<queue>\
+//{\field{\*\fldinst{HYPERLINK "https://gist.github.com/mycodeschool/9507131"}}{\fldrslt https://gist.github.com/mycodeschool/9507131}}\
+\pard\pardeftab720\sl320
+\cf8 \cb9 void\cf10  \cf11 LevelOrder\cf10 (Node *root) \{\
+	\cf8 if\cf10 (root == \cf12 NULL\cf10 ) \cf8 return\cf10 ;\
+	queue<Node*> Q;\
+	Q.\cf12 push\cf10 (root);  \
+	\cf13 //while there is at least one discovered node\cf10 \
+	\cf8 while\cf10 (!Q.\cf12 empty\cf10 ()) \{\
+		Node* current = Q.\cf12 front\cf10 ();\
+		Q.\cf12 pop\cf10 (); \cf13 // removing the element at front\cf10 \
+		cout<<current->data<<\cf14 " "\cf10 ;\
+		\cf8 if\cf10 (current->left != \cf12 NULL\cf10 ) Q.\cf12 push\cf10 (current->left);\
+		\cf8 if\cf10 (current->right != \cf12 NULL\cf10 ) Q.\cf12 push\cf10 (current->right);\
+	\}\
+\}\
+\
+//Depth First Search\
+//{\field{\*\fldinst{HYPERLINK "https://gist.github.com/mycodeschool/10016271"}}{\fldrslt https://gist.github.com/mycodeschool/10016271}}\
+\pard\pardeftab720\sl320
+\cf13 //Function to visit nodes in Preorder\cf10 \
+\pard\pardeftab720\sl320
+\cf8 void\cf10  \cf11 Preorder\cf10 (\cf8 struct\cf10  \cf11 Node\cf10  *root) \{\
+	\cf13 // base condition for recursion\cf10 \
+	\cf13 // if tree/sub-tree is empty, return and exit\cf10 \
+	\cf8 if\cf10 (root == \cf12 NULL\cf10 ) \cf8 return\cf10 ;\
+\'a0\
+	\cf12 printf\cf10 (\cf14 "\cf12 %c\cf14  "\cf10 ,root->data); \cf13 // Print data\cf10 \
+	\cf12 Preorder\cf10 (root->left);     \cf13 // Visit left subtree\cf10 \
+	\cf12 Preorder\cf10 (root->right);    \cf13 // Visit right subtree\cf10 \
+\}\
+\'a0\
+\pard\pardeftab720\sl320
+\cf13 //Function to visit nodes in Inorder\cf10 \
+\pard\pardeftab720\sl320
+\cf8 void\cf10  \cf11 Inorder\cf10 (Node *root) \{\
+	\cf8 if\cf10 (root == \cf12 NULL\cf10 ) \cf8 return\cf10 ;\
+\'a0\
+	\cf12 Inorder\cf10 (root->left);       \cf13 //Visit left subtree\cf10 \
+	\cf12 printf\cf10 (\cf14 "\cf12 %c\cf14  "\cf10 ,root->data);  \cf13 //Print data\cf10 \
+	\cf12 Inorder\cf10 (root->right);      \cf13 // Visit right subtree\cf10 \
+\}\
+\'a0\
+\pard\pardeftab720\sl320
+\cf13 //Function to visit nodes in Postorder\cf10 \
+\pard\pardeftab720\sl320
+\cf8 void\cf10  \cf11 Postorder\cf10 (Node *root) \{\
+	\cf8 if\cf10 (root == \cf12 NULL\cf10 ) \cf8 return\cf10 ;\
+\'a0\
+	\cf12 Postorder\cf10 (root->left);    \cf13 // Visit left subtree\cf10 \
+	\cf12 Postorder\cf10 (root->right);   \cf13 // Visit right subtree\cf10 \
+	\cf12 printf\cf10 (\cf14 "\cf12 %c\cf14  "\cf10 ,root->data); \cf13 // Print data\cf10 \
+\}\
+//Deleting a node\
+//{\field{\*\fldinst{HYPERLINK "https://gist.github.com/mycodeschool/9465a188248b624afdbf"}}{\fldrslt https://gist.github.com/mycodeschool/9465a188248b624afdbf}}\
+\cf8 struct\cf10  \cf11 Node\cf10 * \cf11 Delete\cf10 (\cf8 struct\cf10  \cf11 Node\cf10  *root, \cf8 int\cf10  data) \{\
+	\cf8 if\cf10 (root == \cf12 NULL\cf10 ) \cf8 return\cf10  root; \
+	\cf8 else\cf10  \cf8 if\cf10 (data < root->data) root->left = \cf12 Delete\cf10 (root->left,data);\
+	\cf8 else\cf10  \cf8 if\cf10  (data > root->data) root->right = \cf12 Delete\cf10 (root->right,data);\
+	\cf13 // Wohoo... I found you, Get ready to be deleted	\cf10 \
+	\cf8 else\cf10  \{\
+		\cf13 // Case 1:  No child\cf10 \
+		\cf8 if\cf10 (root->left == \cf12 NULL\cf10  && root->right == \cf12 NULL\cf10 ) \{ \
+			\cf8 delete\cf10  root;\
+			root = \cf12 NULL\cf10 ;\
+		\}\
+		\cf13 //Case 2: One child \cf10 \
+		\cf8 else\cf10  \cf8 if\cf10 (root->left == \cf12 NULL\cf10 ) \{\
+			\cf8 struct\cf10  \cf11 Node\cf10  *temp = root;\
+			root = root->right;\
+			\cf8 delete\cf10  temp;\
+		\}\
+		\cf8 else\cf10  \cf8 if\cf10 (root->right == \cf12 NULL\cf10 ) \{\
+			\cf8 struct\cf10  \cf11 Node\cf10  *temp = root;\
+			root = root->left;\
+			\cf8 delete\cf10  temp;\
+		\}\
+		\cf13 // case 3: 2 children\cf10 \
+		\cf8 else\cf10  \{ \
+			\cf8 struct\cf10  \cf11 Node\cf10  *temp = \cf12 FindMin\cf10 (root->right);\
+			root->data = temp->data;\
+			root->right = \cf12 Delete\cf10 (root->right,temp->data);\
+		\}\
+	\}\
+	\cf8 return\cf10  root;\
+\}\
+\
+//FindMin Node\
+Node* \cf11 FindMin\cf10 (Node* root)\
+\{\
+	\cf8 while\cf10 (root->left != \cf12 NULL\cf10 ) root = root->left;\
+	\cf8 return\cf10  root;\
+\}\
+\
+\'a0\
+//Get in order successor\
+//{\field{\*\fldinst{HYPERLINK "https://gist.github.com/mycodeschool/6515e1ec66482faf9d79"}}{\fldrslt https://gist.github.com/mycodeschool/6515e1ec66482faf9d79}}\
+Node* \cf11 Find\cf10 (Node*root, \cf8 int\cf10  data) \{\
+	\cf8 if\cf10 (root == \cf12 NULL\cf10 ) \cf8 return\cf10  \cf12 NULL\cf10 ;\
+	\cf8 else\cf10  \cf8 if\cf10 (root->data == data) \cf8 return\cf10  root;\
+	\cf8 else\cf10  \cf8 if\cf10 (root->data < data) \cf8 return\cf10  \cf12 Find\cf10 (root->right,data);\
+	\cf8 else\cf10  \cf8 return\cf10  \cf12 Find\cf10 (root->left,data);\
+\}\
+\'a0\
+\pard\pardeftab720\sl320
+\cf13 //Function to find Node with minimum value in a BST\cf10 \
+\pard\pardeftab720\sl320
+\cf8 struct\cf10  \cf11 Node\cf10 * \cf11 FindMin\cf10 (\cf8 struct\cf10  \cf11 Node\cf10 * root) \{\
+	\cf8 if\cf10 (root == \cf12 NULL\cf10 ) \cf8 return\cf10  \cf12 NULL\cf10 ;\
+	\cf8 while\cf10 (root->left != \cf12 NULL\cf10 )\
+		root = root->left;\
+	\cf8 return\cf10  root;\
+\}\
+\'a0\
+\pard\pardeftab720\sl320
+\cf13 //Function to find Inorder Successor in a BST\cf10 \
+\pard\pardeftab720\sl320
+\cf8 struct\cf10  \cf11 Node\cf10 * \cf11 Getsuccessor\cf10 (\cf8 struct\cf10  \cf11 Node\cf10 * root,\cf8 int\cf10  data) \{\
+	\cf13 // Search the Node - O(h)\cf10 \
+	\cf8 struct\cf10  \cf11 Node\cf10 * current = \cf12 Find\cf10 (root,data);\
+	\cf8 if\cf10 (current == \cf12 NULL\cf10 ) \cf8 return\cf10  \cf12 NULL\cf10 ;\
+	\cf8 if\cf10 (current->right != \cf12 NULL\cf10 ) \{  \cf13 //Case 1: Node has right subtree\cf10 \
+		\cf8 return\cf10  \cf12 FindMin\cf10 (current->right); \cf13 // O(h)\cf10 \
+	\}\
+	\cf8 else\cf10  \{   \cf13 //Case 2: No right subtree  - O(h)\cf10 \
+		\cf8 struct\cf10  \cf11 Node\cf10 * successor = \cf12 NULL\cf10 ;\
+		\cf8 struct\cf10  \cf11 Node\cf10 * ancestor = root;\
+		\cf8 while\cf10 (ancestor != current) \{\
+			\cf8 if\cf10 (current->data < ancestor->data) \{\
+				successor = ancestor; \cf13 // so far this is the deepest node for which current node is in left\cf10 \
+				ancestor = ancestor->left;\
+			\}\
+			\cf8 else\cf10 \
+				ancestor = ancestor->right;\
+		\}\
+		\cf8 return\cf10  successor;\
+	\}\
+\}\
+\
+\
+\pard\pardeftab720\sl320
+\cf3 \cb1 \
+}

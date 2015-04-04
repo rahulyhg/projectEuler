@@ -1,0 +1,30 @@
+{
+    "name": "Kundali Matching",
+    "version": "1.0",
+    "manifest_version" : 2,
+    "description": "Matches your kundali with the candidate",
+    "icons" : {"16": "kundali_matching_16.png",
+                "48": "kundali_matching_48.png",
+                "128": "kundali_matching_128.png" },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "browser_action": {
+        "default_title": "Kundali Matching",
+        "default_icon": "kundali_matching_16.png",
+        "default_popup": "kundaliPopup.html"
+    },
+    "content_scripts" : [{
+                "matches" : [ "http://*/*", "https://*/*" ],
+                "js" : [ "script.js" ],
+                "run_at" : "document_end"
+    }],
+    "options_page": "options.html",
+    "permissions":[
+        "storage",
+        "background",
+        "tabs",
+        "http://*/*",
+        "https://*/*"
+    ]
+}

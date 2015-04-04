@@ -1,0 +1,13 @@
+//Collections.Sort uses merge sort whereas Arrays.sort uses quickSort
+//Main reason: Stability, and 2nd: it does not guarantee n log n performance
+// http://stackoverflow.com/questions/15154158/why-collections-sort-uses-merge-sort-instead-of-quicksort
+
+//LinkedList l.size() is O(1)!
+//http://stackoverflow.com/questions/863469/what-is-the-time-complexity-of-a-size-call-on-a-linkedlist-in-java
+
+//BigInteger in java functions as a int[]
+//http://developer.classpath.org/doc/java/math/BigInteger-source.html
+//http://stackoverflow.com/questions/5878603/how-does-biginteger-store-its-data
+
+Place where java is searching for files: System.out.println(System.getProperty("user.dir"));
+Awesome Sums: 145, 26
